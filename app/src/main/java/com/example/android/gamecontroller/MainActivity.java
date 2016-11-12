@@ -1,11 +1,8 @@
 package com.example.android.gamecontroller;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import montebaes.tanvas.controls.ButtonDragListener;
 
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         modeType.setText(R.string.mode_false);
 
         findViewById(R.id.activity_main).setOnDragListener(new ButtonDragListener());
+
     }
 
     public void onClick(View v){
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 changeMODE(false);
                 modeType.setText(R.string.mode_false);
                 unSetAllLongClickListener();
+
             } else {
                 changeMODE(true);
                 modeType.setText(R.string.mode_true);
@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setAllLongClickListener(){
         testMoveImg.setOnLongClickListener(longListen);
     }
+
     public void unSetAllLongClickListener(){
         testMoveImg.setOnLongClickListener(null);
     }
+
 
     View.OnLongClickListener longListen = new View.OnLongClickListener() {
         @Override
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
     };
-
 
     public void changeMODE(boolean MODE){
         this.MODE = MODE;
@@ -106,8 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onProvideShadowMetrics(Point shadowSize, Point shadowTouchPoint){
             View v = getView();
 
-            int height = v.getHeight();
-            int width = v.getWidth();
+            int height = (int) v.getHeight();
+            int width = (int) v.getWidth();
+
 
             shadowSize.set(width, height);
 
