@@ -3,31 +3,95 @@ package com.example.android.gamecontroller;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.graphics.Canvas;
+
+import com.zerokol.views.JoystickView;
 
 import co.tanvas.haptics.service.app.*;
 import co.tanvas.haptics.service.adapter.*;
 import co.tanvas.haptics.service.model.*;
 
+import static android.R.attr.angle;
+import static android.R.attr.direction;
+import static com.example.android.gamecontroller.R.id.gameField;
 
 
-public class HapticTest extends AppCompatActivity {
+public class HapticTest extends AppCompatActivity{
 
     private HapticView mHapticView;
     private HapticTexture mHapticTexture;
     private HapticMaterial mHapticMaterial;
     private HapticSprite mHapticSprite;
 
+    private TextView angleTextView;
+    private TextView powerTextView;
+    private TextView directionTextView;
+
+    private JoystickView joyStick;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_haptictest);
+
+
+        angleTextView = (TextView) findViewById(R.id.angleTextView);
+        powerTextView = (TextView) findViewById(R.id.powerTextView);
+        directionTextView = (TextView) findViewById(R.id.directionTextView);
+
+        joyStick = (JoystickView)findViewById(R.id.joystickView);
+
+
+
+        joyStick.setOnJoystickMoveListener(new JoystickView.OnJoystickMoveListener() {
+            @Override
+            public void onValueChanged(int angle, int power, int direction) {
+                // TODO Auto-generated method stub
+                angleTextView.setText(" " + String.valueOf(angle) + "°");
+                powerTextView.setText(" " + String.valueOf(power) + "%");
+                switch (direction) {
+                    case JoystickView.FRONT:
+                        directionTextView.setText("Front");
+                        break;
+                    case JoystickView.FRONT_RIGHT:
+                        directionTextView.setText("Front Right");
+                        break;
+                    case JoystickView.RIGHT:
+                        directionTextView.setText("Right");
+                        break;
+                    case JoystickView.RIGHT_BOTTOM:
+                        directionTextView.setText("Right Bottom");
+                        break;
+                    case JoystickView.BOTTOM:
+                        directionTextView.setText("Bottom");
+                        break;
+                    case JoystickView.BOTTOM_LEFT:
+                        directionTextView.setText("Bottom Left");
+                        break;
+                    case JoystickView.LEFT:
+                        directionTextView.setText("Left");
+                        break;
+                    case JoystickView.LEFT_FRONT:
+                        directionTextView.setText("Left Front");
+                        break;
+                    default:
+                        directionTextView.setText("Center");
+                }
+            }
+        }, JoystickView.DEFAULT_LOOP_INTERVAL);
+
 
         //Init haptics
         initHaptics();
@@ -41,7 +105,7 @@ public class HapticTest extends AppCompatActivity {
         if (hasFocus) {
             try {
                 // Set the size and position of the haptic sprite to correspond to the view we created
-                View view = findViewById(R.id.view);
+                View view = findViewById(R.id.joystickWrap);
                 int[] location = new int[2];
                 view.getLocationOnScreen(location);
                 mHapticSprite.setSize(view.getWidth(), view.getHeight());
@@ -84,7 +148,7 @@ public class HapticTest extends AppCompatActivity {
             mHapticView.setOrientation(orientation);
 
             // Retrieve texture data from the bitmap
-            Bitmap hapticBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.noise_texture);
+            Bitmap hapticBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.radial);
             byte[] textureData = HapticTexture.createTextureDataFromBitmap(hapticBitmap);
 
             // Create a haptic texture with the retrieved texture data
@@ -108,4 +172,42 @@ public class HapticTest extends AppCompatActivity {
             Log.e(null, e.toString());
         }
     }
+
+//    private class DragListener implements View.OnDragListener {
+//
+//        public boolean onDrag(View v, DragEvent event) {
+//            int action = event.getAction();
+//            switch (action) {
+//                case DragEvent.ACTION_DRAG_STARTED:
+//                    v.invalidate();
+//                    return true;
+//                case DragEvent.ACTION_DRAG_ENTERED:
+//                    v.invalidate();
+//                    return true;
+//                case DragEvent.ACTION_DRAG_EXITED:
+//                    v.invalidate();
+//                    return true;
+//                case DragEvent.ACTION_DRAG_ENDED:
+//                    v.setBackgroundColor(Color.WHITE);
+//                    v.invalidate();
+//                    return true;
+//                case DragEvent.ACTION_DROP:
+//
+//                    return true;
+//            }
+//            return false;
+//        }
+//    }
+//
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event) {
+//
+//
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//
+//
+//            return true;
+//        }
+//        return false;
+//    }
 }

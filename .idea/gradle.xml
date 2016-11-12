@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/joystickview" />
             <option value="$PROJECT_DIR$/tanvas-hapticlib-3.0-156" />
             <option value="$PROJECT_DIR$/tanvas-hapticlib-3.0-163" />
           </set>
