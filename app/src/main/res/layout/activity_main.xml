@@ -10,8 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.gamecontroller.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="500px"
+        android:layout_height="500px"
+        android:background="#FF0000"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>

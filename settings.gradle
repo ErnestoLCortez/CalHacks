@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':tanvas-hapticlib-3.0-163', ':tanvas-hapticlib-3.0-156', ':joystickview'
