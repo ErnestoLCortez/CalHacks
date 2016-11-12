@@ -11,6 +11,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.gamecontroller.MainActivity">
 
+<<<<<<< HEAD
     <Button
         android:text="Drag/Drop"
         android:layout_width="wrap_content"
@@ -35,4 +36,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/test_move_img"
         android:id="@+id/mode_type" />
+=======
+    <View
+        android:id="@+id/view"
+        android:layout_width="500px"
+        android:layout_height="500px"
+        android:background="#FF0000"
+        android:layout_centerInParent="true"/>
+
+>>>>>>> origin
 </RelativeLayout>
