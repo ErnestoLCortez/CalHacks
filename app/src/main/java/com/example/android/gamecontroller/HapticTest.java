@@ -1,5 +1,6 @@
 package com.example.android.gamecontroller;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.graphics.Canvas;
 
@@ -23,36 +25,105 @@ import co.tanvas.haptics.service.adapter.*;
 import co.tanvas.haptics.service.model.*;
 
 import static android.R.attr.angle;
+import static android.R.attr.bitmap;
 import static android.R.attr.direction;
 import static com.example.android.gamecontroller.R.id.gameField;
 
 
-public class HapticTest extends AppCompatActivity{
+public class HapticTest extends AppCompatActivity implements View.OnTouchListener {
 
+    //Tanvas Stuff
     private HapticView mHapticView;
     private HapticTexture mHapticTexture;
     private HapticMaterial mHapticMaterial;
     private HapticSprite mHapticSprite;
-
+    /********************************/
     private TextView angleTextView;
     private TextView powerTextView;
     private TextView directionTextView;
 
     private JoystickView joyStick;
 
+    private boolean joyStickCreated;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_haptictest);
-
+        joyStickCreated = false;
 
         angleTextView = (TextView) findViewById(R.id.angleTextView);
         powerTextView = (TextView) findViewById(R.id.powerTextView);
         directionTextView = (TextView) findViewById(R.id.directionTextView);
+        findViewById(R.id.joystickWrap).setOnTouchListener(this);
+        createJoyStick();
 
-        joyStick = (JoystickView)findViewById(R.id.joystickView);
 
+        //Initialize haptics
+        initHaptics();
+    }
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            try {
+                // Set the size and position of the haptic sprite to correspond to the view we created
+                View view = findViewById(R.id.joystickView);
+                int[] location = new int[2];
+                view.getLocationOnScreen(location);
+                mHapticSprite.setSize(view.getWidth(), view.getHeight());
+                mHapticSprite.setPosition(location[0], location[1]);
+            } catch (Exception e) {
+                Log.e(null, e.toString());
+            }
+        }
+    }
+
+    /**
+     * Override: onDestroy
+     * <p/>
+     * <p>When the application quits or switches orientation, we will need to release all the haptic resources.</p>
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            mHapticView.deactivate();
+        } catch (Exception e) {
+            Log.e(null, e.toString());
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN && !joyStickCreated) {
+            float x = event.getX();
+            float y = event.getY();
+
+            joyStick.setX(x - joyStick.getPivotX());
+            joyStick.setY(y - joyStick.getPivotY());
+            joyStick.setEnabled(true);
+            joyStick.setVisibility(View.VISIBLE);
+            joyStickCreated = true;
+            onWindowFocusChanged(true);
+            /*PROBLEM AREA*/
+            //joyStick.onTouchEvent(event);
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            joyStickCreated = false;
+            joyStick.setVisibility(View.INVISIBLE);
+            joyStick.setEnabled(false);
+        }
+        return true;
+    }
+
+    private void createJoyStick() {
+        joyStick = (JoystickView) findViewById(R.id.joystickView);
 
 
         joyStick.setOnJoystickMoveListener(new JoystickView.OnJoystickMoveListener() {
@@ -91,46 +162,7 @@ public class HapticTest extends AppCompatActivity{
                 }
             }
         }, JoystickView.DEFAULT_LOOP_INTERVAL);
-
-
-        //Init haptics
-        initHaptics();
     }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        if (hasFocus) {
-            try {
-                // Set the size and position of the haptic sprite to correspond to the view we created
-                View view = findViewById(R.id.joystickWrap);
-                int[] location = new int[2];
-                view.getLocationOnScreen(location);
-                mHapticSprite.setSize(view.getWidth(), view.getHeight());
-                mHapticSprite.setPosition(location[0], location[1]);
-            } catch (Exception e) {
-                Log.e(null, e.toString());
-            }
-        }
-    }
-
-    /**
-     * Override: onDestroy
-     * <p/>
-     * <p>When the application quits or switches orientation, we will need to release all the haptic resources.</p>
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        try {
-            mHapticView.deactivate();
-        } catch (Exception e) {
-            Log.e(null, e.toString());
-        }
-    }
-
 
     private void initHaptics() {
         try {
@@ -172,42 +204,4 @@ public class HapticTest extends AppCompatActivity{
             Log.e(null, e.toString());
         }
     }
-
-//    private class DragListener implements View.OnDragListener {
-//
-//        public boolean onDrag(View v, DragEvent event) {
-//            int action = event.getAction();
-//            switch (action) {
-//                case DragEvent.ACTION_DRAG_STARTED:
-//                    v.invalidate();
-//                    return true;
-//                case DragEvent.ACTION_DRAG_ENTERED:
-//                    v.invalidate();
-//                    return true;
-//                case DragEvent.ACTION_DRAG_EXITED:
-//                    v.invalidate();
-//                    return true;
-//                case DragEvent.ACTION_DRAG_ENDED:
-//                    v.setBackgroundColor(Color.WHITE);
-//                    v.invalidate();
-//                    return true;
-//                case DragEvent.ACTION_DROP:
-//
-//                    return true;
-//            }
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//
-//
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//
-//
-//            return true;
-//        }
-//        return false;
-//    }
 }
