@@ -7,9 +7,12 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.example.android.gamecontroller.R;
 
 /**
  *
@@ -21,6 +24,8 @@ public class ButtonDragListener implements View.OnDragListener {
     public boolean onDrag(View v, DragEvent event) {
 
         final int action = event.getAction();
+
+
 
         switch(action) {
             case DragEvent.ACTION_DRAG_STARTED:
@@ -56,9 +61,9 @@ public class ButtonDragListener implements View.OnDragListener {
             case DragEvent.ACTION_DROP:
                 Log.d("drag", "drop" + event.getX() + " " + event.getY());
 
-                RelativeLayout target = (RelativeLayout) v;
-                ImageView dragged = (ImageView) event.getLocalState();
-
+                //RelativeLayout target = (RelativeLayout) v;
+                ImageButton dragged = (ImageButton) event.getLocalState();
+                //dragged.setImageResource(R.drawable.black);
                 dragged.setX(event.getX());
                 dragged.setY(event.getY());
 

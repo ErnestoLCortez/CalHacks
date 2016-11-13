@@ -27,6 +27,7 @@ import co.tanvas.haptics.service.adapter.*;
 import co.tanvas.haptics.service.model.*;
 
 
+
 public class HapticTest extends AppCompatActivity{
 
     //Tanvas Stuff
