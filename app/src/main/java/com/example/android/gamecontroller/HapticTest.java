@@ -30,10 +30,7 @@ import co.tanvas.haptics.service.model.*;
 public class HapticTest extends AppCompatActivity{
 
     //Tanvas Stuff
-    private HapticView mHapticView;
-    private HapticTexture mHapticTexture;
-    private HapticMaterial mHapticMaterial;
-    private HapticSprite mHapticSprite;
+    HapticObject joysticHaptic;
     /********************************/
     private TextView angleTextView;
     private TextView powerTextView;
@@ -42,7 +39,7 @@ public class HapticTest extends AppCompatActivity{
     private JoystickView joyStick;
     private RelativeLayout joyStickWrapper;
 
-    private boolean joyStickCreated;
+
 
 
     GestureDetectorCompat gestureDetector;
@@ -52,7 +49,6 @@ public class HapticTest extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_haptictest);
-        joyStickCreated = false;
 
         angleTextView = (TextView) findViewById(R.id.angleTextView);
         powerTextView = (TextView) findViewById(R.id.powerTextView);
@@ -66,26 +62,15 @@ public class HapticTest extends AppCompatActivity{
 
         gestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
         //Initialize haptics
-        initHaptics();
+        joysticHaptic = new HapticObject(this, R.drawable.radial);
     }
 
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        joysticHaptic.onWindowFocusChanged(this, true, R.id.joystickView);
 
-        if (hasFocus) {
-            try {
-                // Set the size and position of the haptic sprite to correspond to the view we created
-                View view = findViewById(R.id.joystickView);
-                int[] location = new int[2];
-                view.getLocationOnScreen(location);
-                mHapticSprite.setSize(view.getWidth(), view.getHeight());
-                mHapticSprite.setPosition(location[0], location[1]);
-            } catch (Exception e) {
-                Log.e(null, e.toString());
-            }
-        }
     }
 
     /**
@@ -96,11 +81,7 @@ public class HapticTest extends AppCompatActivity{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {
-            mHapticView.deactivate();
-        } catch (Exception e) {
-            Log.e(null, e.toString());
-        }
+        joysticHaptic.onDestroy();
     }
 
 
@@ -177,46 +158,7 @@ public class HapticTest extends AppCompatActivity{
         }, JoystickView.DEFAULT_LOOP_INTERVAL);
     }
 
-    private void initHaptics() {
-        try {
-            // Get the service adapter
-            HapticServiceAdapter serviceAdapter = HapticApplication.getHapticServiceAdapter();
 
-            // Create a haptic view and activate it
-            mHapticView = HapticView.create(serviceAdapter);
-            mHapticView.activate();
-
-            // Set the orientation of the haptic view
-            Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-            int rotation = display.getRotation();
-            HapticView.Orientation orientation = HapticView.getOrientationFromAndroidDisplayRotation(rotation);
-            mHapticView.setOrientation(orientation);
-
-            // Retrieve texture data from the bitmap
-            Bitmap hapticBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.radial);
-            byte[] textureData = HapticTexture.createTextureDataFromBitmap(hapticBitmap);
-
-            // Create a haptic texture with the retrieved texture data
-            mHapticTexture = HapticTexture.create(serviceAdapter);
-            int textureDataWidth = hapticBitmap.getRowBytes() / 4; // 4 channels, i.e., ARGB
-            int textureDataHeight = hapticBitmap.getHeight();
-            mHapticTexture.setSize(textureDataWidth, textureDataHeight);
-            mHapticTexture.setData(textureData);
-
-            // Create a haptic material with the created haptic texture
-            mHapticMaterial = HapticMaterial.create(serviceAdapter);
-            mHapticMaterial.setTexture(0, mHapticTexture);
-
-            // Create a haptic sprite with the haptic material
-            mHapticSprite = HapticSprite.create(serviceAdapter);
-            mHapticSprite.setMaterial(mHapticMaterial);
-
-            // Add the haptic sprite to the haptic view
-            mHapticView.addSprite(mHapticSprite);
-        } catch (Exception e) {
-            Log.e(null, e.toString());
-        }
-    }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         private static final String DEBUG_TAG = "Gestures";
@@ -231,7 +173,7 @@ public class HapticTest extends AppCompatActivity{
                 joyStick.setX(x - joyStick.getPivotX());
                 joyStick.setY(y - joyStick.getPivotY());
 
-                joyStickCreated = true;
+
                 onWindowFocusChanged(true);
             /*PROBLEM AREA*/
                 //joyStick.dispatchTouchEvent(event);
