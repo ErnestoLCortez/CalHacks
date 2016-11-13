@@ -3,4 +3,6 @@
     <string name="mode_false">Out of Drag/Drop Mode</string>
     <string name="mode_true">In Drag/Drop Mode</string>
     <string name="log_mode">MODE CHANGE : </string>
+    <string name="drag_drop">Drag/Drop</string>
+    <string name="textview">TextView</string>
 </resources>

@@ -13,8 +13,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import co.tanvas.haptics.service.app.*;
+import co.tanvas.haptics.service.adapter.*;
+import co.tanvas.haptics.service.model.*;
 
 import montebaes.tanvas.controls.ButtonDragListener;
 
@@ -25,9 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /* MODE */
     private static boolean MODE = false;
 
+    ImageButton temp;
+
     /* Content */
     TextView modeType;
     Button dragDropButton;
+
+    ImageButton redButton, greenButton;
+
     ImageView testMoveImg;
 
     @Override
@@ -40,12 +50,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dragDropButton = (Button) findViewById(R.id.drag_drop_button);
         dragDropButton.setOnClickListener(this);
 
-        testMoveImg = (ImageView) findViewById(R.id.test_move_img);
-        testMoveImg.setOnClickListener(this);
+        //testMoveImg = (ImageView) findViewById(R.id.test_move_img);
+        //testMoveImg = (ImageView) findViewById(R.id.button_red_unpressed);
+        //testMoveImg.setOnClickListener(this);
 
         modeType = (TextView) findViewById(R.id.mode_type);
         modeType.setOnClickListener(this);
         modeType.setText(R.string.mode_false);
+
+        greenButton = (ImageButton) findViewById(R.id.button_green);
+        redButton = (ImageButton) findViewById(R.id.button_red);
+        redButton.setOnClickListener(this);
+        redButton.setImageResource(R.drawable.redb);
 
         findViewById(R.id.activity_main).setOnDragListener(new ButtonDragListener());
 
@@ -64,20 +80,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 modeType.setText(R.string.mode_true);
 
                 /* START DRAG/DROP MODE */
+                temp = null;
                 setAllLongClickListener();
             }
         }
+//        else if(v.getId() == redButton.getId()){
+//            if(redButton.getDrawable().equals(R.drawable.greena)) {
+//                redButton.setImageResource(R.drawable.redb);
+//            }
+//            else{
+//                redButton.setImageResource(R.drawable.greena);
+//            }
+//        }
     }
 
     //Only set on long click listener when this function is called
     public void setAllLongClickListener(){
-        testMoveImg.setOnLongClickListener(longListen);
+        redButton.setOnLongClickListener(longListen);
+        greenButton.setOnLongClickListener(longListen);
+
     }
 
     public void unSetAllLongClickListener(){
-        testMoveImg.setOnLongClickListener(null);
+        redButton.setOnLongClickListener(null);
+        greenButton.setOnLongClickListener(null);
     }
-
 
     View.OnLongClickListener longListen = new View.OnLongClickListener() {
         @Override
@@ -91,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+
     public void changeMODE(boolean MODE){
         this.MODE = MODE;
         Log.v(LOG_MODE, String.valueOf(MODE));
@@ -98,14 +126,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private class DragShadow extends View.DragShadowBuilder{
 
+        public ImageButton var;
+
         public DragShadow(View view){
             super(view);
+            var = (ImageButton) view;
         }
 
         @Override
         public void onDrawShadow(Canvas canvas){
             //Canvas is the area of the shadow
-            testMoveImg.draw(canvas);
+            //temp.setImageResource(R.drawable.black);
+            var.draw(canvas);
         }
 
         @Override
