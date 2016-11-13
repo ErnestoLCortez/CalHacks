@@ -5,7 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/GameController.iml" filepath="$PROJECT_DIR$/GameController.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/joystickview/joystickview.iml" filepath="$PROJECT_DIR$/joystickview/joystickview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/joystickview/joystickview.iml" filepath="$PROJECT_DIR$/joystickview/joystickview.iml" />
       <module fileurl="file://$PROJECT_DIR$/tanvas-hapticlib-3.0-156/tanvas-hapticlib-3.0-156.iml" filepath="$PROJECT_DIR$/tanvas-hapticlib-3.0-156/tanvas-hapticlib-3.0-156.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tanvas-hapticlib-3.0-156/tanvas-hapticlib-3.0-156.iml" filepath="$PROJECT_DIR$/tanvas-hapticlib-3.0-156/tanvas-hapticlib-3.0-156.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tanvas-hapticlib-3.0-163/tanvas-hapticlib-3.0-163.iml" filepath="$PROJECT_DIR$/tanvas-hapticlib-3.0-163/tanvas-hapticlib-3.0-163.iml" />
       <module fileurl="file://$PROJECT_DIR$/tanvas-hapticlib-3.0-163/tanvas-hapticlib-3.0-163.iml" filepath="$PROJECT_DIR$/tanvas-hapticlib-3.0-163/tanvas-hapticlib-3.0-163.iml" />
     </modules>
   </component>
