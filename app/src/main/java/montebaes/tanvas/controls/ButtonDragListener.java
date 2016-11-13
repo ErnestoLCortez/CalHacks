@@ -62,11 +62,17 @@ public class ButtonDragListener implements View.OnDragListener {
             case DragEvent.ACTION_DROP:
                 Log.d("drag", "drop" + event.getX() + " " + event.getY());
 
+
+
                 //RelativeLayout target = (RelativeLayout) v;
                 ImageButton dragged = (ImageButton) event.getLocalState();
+                RelativeLayout parent = (RelativeLayout)dragged.getParent();
+                int xOffset = parent.getLeft();
+
                 //dragged.setImageResource(R.drawable.black);
-                dragged.setX(event.getX());
-                dragged.setY(event.getY());
+                dragged.setTranslationX(event.getX());
+                dragged.setTranslationY(event.getY());
+
                 //target.findViewById(dragged.getId());
 
 

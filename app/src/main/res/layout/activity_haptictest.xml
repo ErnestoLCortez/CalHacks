@@ -72,7 +72,7 @@
         android:id="@+id/gameField">
 
 
-        <com.example.android.gamecontroller.JoystickWrapper
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/joystickWrap">
@@ -82,7 +82,7 @@
             android:layout_height="250dp"
             android:id="@+id/joystickView"/>
 
-        </com.example.android.gamecontroller.JoystickWrapper>
+        </RelativeLayout>
 
 
     </LinearLayout>

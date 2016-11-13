@@ -1,30 +1,16 @@
 package com.example.android.gamecontroller;
 
-import android.content.ClipData;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.graphics.Canvas;
-
 import com.zerokol.views.JoystickView;
 
-import co.tanvas.haptics.service.app.*;
-import co.tanvas.haptics.service.adapter.*;
-import co.tanvas.haptics.service.model.*;
 
 
 
@@ -39,9 +25,6 @@ public class HapticTest extends AppCompatActivity{
 
     private JoystickView joyStick;
     private RelativeLayout joyStickWrapper;
-
-
-
 
     GestureDetectorCompat gestureDetector;
 
@@ -92,31 +75,7 @@ public class HapticTest extends AppCompatActivity{
         this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//
-//
-//        if (event.getAction() == MotionEvent.ACTION_DOWN && !joyStickCreated) {
-//            float x = event.getX();
-//            float y = event.getY();
-//
-//            joyStick.setX(x - joyStick.getPivotX());
-//            joyStick.setY(y - joyStick.getPivotY());
-//            joyStick.setEnabled(true);
-//            joyStick.setVisibility(View.VISIBLE);
-//            joyStickCreated = true;
-//            onWindowFocusChanged(true);
-//            /*PROBLEM AREA*/
-//            //joyStick.dispatchTouchEvent(event);
-//            Log.d("drag", "drag");
-//        }
-//        else if (event.getAction() == MotionEvent.ACTION_UP) {
-//            joyStickCreated = false;
-//            joyStick.setVisibility(View.INVISIBLE);
-//            joyStick.setEnabled(false);
-//        }
-//        return true;
-//    }
+
 
     private void createJoyStick() {
         joyStick = (JoystickView) findViewById(R.id.joystickView);
@@ -169,8 +128,8 @@ public class HapticTest extends AppCompatActivity{
         public boolean onDoubleTap(MotionEvent event){
             Log.d(DEBUG_TAG, "onDoubleTap: " + event.toString());
 
-                float x = event.getX() -50;
-                float y = event.getY() -50;
+                float x = event.getX();
+                float y = event.getY();
 
                 joyStick.setX(x - joyStick.getPivotX());
                 joyStick.setY(y - joyStick.getPivotY());
@@ -181,11 +140,7 @@ public class HapticTest extends AppCompatActivity{
                 //joyStick.dispatchTouchEvent(event);
                 Log.d("drag", "drag");
 
-//            else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                joyStickCreated = false;
-//                joyStick.setVisibility(View.INVISIBLE);
-//                joyStick.setEnabled(false);
-//            }
+
             return true;
 
         }
