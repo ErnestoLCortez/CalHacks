@@ -10,6 +10,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -27,10 +28,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button dragDropButton;
     ImageView testMoveImg;
 
+    /* LAYOUTS */
+    //LinearLayout leftView, rightView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* VIEWS */
 
         dragDropButton = (Button) findViewById(R.id.drag_drop_button);
         dragDropButton.setOnClickListener(this);

@@ -8,14 +8,17 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.example.android.gamecontroller.R;
 
 /**
  *
  */
 
-public class ButtonDragListener implements View.OnDragListener {
+public class ButtonDragListener implements View.OnDragListener{
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
@@ -54,16 +57,12 @@ public class ButtonDragListener implements View.OnDragListener {
                 return true;
 
             case DragEvent.ACTION_DROP:
-                Log.d("drag", "drop" + event.getX() + " " + event.getY());
+                Log.d("drag", "drop");
 
-                RelativeLayout target = (RelativeLayout) v;
                 ImageView dragged = (ImageView) event.getLocalState();
 
                 dragged.setX(event.getX());
                 dragged.setY(event.getY());
-
-                //target.findViewById(dragged.getId());
-
 
                 // Invalidates the view to force a redraw
                 v.invalidate();
@@ -73,7 +72,7 @@ public class ButtonDragListener implements View.OnDragListener {
 
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
-/*
+
             case DragEvent.ACTION_DRAG_ENDED:
                 Log.d("drag", "ended at " + event.getX() + " " + event.getY());
 
@@ -86,7 +85,7 @@ public class ButtonDragListener implements View.OnDragListener {
 
                 // returns true; the value is ignored.
                 return true;
-*/
+
             default:
                 Log.d("drag", "wtf");
 
