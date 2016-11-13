@@ -23,9 +23,14 @@ public class HapticObject {
 
 
     private HapticView mHapticView;
+
     private HapticTexture mHapticTexture;
     private HapticMaterial mHapticMaterial;
     private HapticSprite mHapticSprite;
+
+    private HapticTexture mActiveTexture;
+    private HapticMaterial mActiveMaterial;
+    private HapticSprite mActiveSprite;
 
 
     public HapticObject(AppCompatActivity parentActivity, int bitMapID){
@@ -93,6 +98,23 @@ public class HapticObject {
             mHapticView.deactivate();
         } catch (Exception e) {
             Log.e(null, e.toString());
+        }
+    }
+
+    public void toggleView(boolean cond){
+        if(cond){
+            try {
+                mHapticView.activate();
+            } catch (Exception e) {
+                Log.e(null, e.toString());
+            }
+        }
+        else{
+            try {
+                mHapticView.deactivate();
+            } catch (Exception e) {
+                Log.e(null, e.toString());
+            }
         }
     }
 

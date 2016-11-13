@@ -9,8 +9,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.zerokol.views.JoystickView;
-
 
 
 
@@ -23,7 +21,7 @@ public class HapticTest extends AppCompatActivity{
     private TextView powerTextView;
     private TextView directionTextView;
 
-    private JoystickView joyStick;
+    private DynamicJoystick joyStick;
     private RelativeLayout joyStickWrapper;
 
     GestureDetectorCompat gestureDetector;
@@ -78,45 +76,45 @@ public class HapticTest extends AppCompatActivity{
 
 
     private void createJoyStick() {
-        joyStick = (JoystickView) findViewById(R.id.joystickView);
+        joyStick = (DynamicJoystick) findViewById(R.id.joystickView);
 
 
-        joyStick.setOnJoystickMoveListener(new JoystickView.OnJoystickMoveListener() {
+        joyStick.setOnJoystickMoveListener(new DynamicJoystick.OnJoystickMoveListener() {
             @Override
             public void onValueChanged(int angle, int power, int direction) {
                 // TODO Auto-generated method stub
                 angleTextView.setText(" " + String.valueOf(angle) + "°");
                 powerTextView.setText(" " + String.valueOf(power) + "%");
                 switch (direction) {
-                    case JoystickView.FRONT:
+                    case DynamicJoystick.FRONT:
                         directionTextView.setText("Front");
                         break;
-                    case JoystickView.FRONT_RIGHT:
+                    case DynamicJoystick.FRONT_RIGHT:
                         directionTextView.setText("Front Right");
                         break;
-                    case JoystickView.RIGHT:
+                    case DynamicJoystick.RIGHT:
                         directionTextView.setText("Right");
                         break;
-                    case JoystickView.RIGHT_BOTTOM:
+                    case DynamicJoystick.RIGHT_BOTTOM:
                         directionTextView.setText("Right Bottom");
                         break;
-                    case JoystickView.BOTTOM:
+                    case DynamicJoystick.BOTTOM:
                         directionTextView.setText("Bottom");
                         break;
-                    case JoystickView.BOTTOM_LEFT:
+                    case DynamicJoystick.BOTTOM_LEFT:
                         directionTextView.setText("Bottom Left");
                         break;
-                    case JoystickView.LEFT:
+                    case DynamicJoystick.LEFT:
                         directionTextView.setText("Left");
                         break;
-                    case JoystickView.LEFT_FRONT:
+                    case DynamicJoystick.LEFT_FRONT:
                         directionTextView.setText("Left Front");
                         break;
                     default:
                         directionTextView.setText("Center");
                 }
             }
-        }, JoystickView.DEFAULT_LOOP_INTERVAL);
+        }, DynamicJoystick.DEFAULT_LOOP_INTERVAL);
     }
 
 

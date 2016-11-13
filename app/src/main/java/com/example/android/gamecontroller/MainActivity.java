@@ -12,39 +12,43 @@ import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
-import com.zerokol.views.JoystickView;
 
 import montebaes.tanvas.controls.ButtonDragListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    /* Log Declaration */
-    final String LOG_MODE = "MODE CHANGE : ";
-
+public class MainActivity extends AppCompatActivity {
     /* MODE */
     private static boolean MODE = false;
+    /* Log Declaration */
+    final String LOG_MODE = "MODE CHANGE : ";
+    GestureDetectorCompat gestureDetector;
 
 
+    View.OnLongClickListener longListen = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            ClipData data = ClipData.newPlainText("","");
+
+            DragShadow dragShadow = new DragShadow(view);
+
+            view.startDrag(data, dragShadow, view, 0);
+            return false;
+        }
+    };
     /* Content */
     private TextView modeType;
-    private Button dragDropButton;
-
     private ImageButton redButton, greenButton;
     private HapticObject redButtonHaptic, greenButtonHaptic;
     private HapticObject joystickHaptic;
     private TextView angleTextView;
     private TextView powerTextView;
     private TextView directionTextView;
-    
-    private JoystickView joyStick;
-
-    GestureDetectorCompat gestureDetector;
+    private DynamicJoystick joyStick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +58,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initJoystickField();
         initButtonField();
         initDragListener();
+        initSwitch();
 
-        
 
+
+    }
+
+    private void initSwitch(){
+        ((Switch)findViewById(R.id.hapticSwitch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                joystickHaptic.toggleView(isChecked);
+                greenButtonHaptic.toggleView(!isChecked);
+                redButtonHaptic.toggleView(!isChecked);
+            }
+        });
     }
     
     private void initJoystickField(){
@@ -70,32 +86,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gestureDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
         joystickHaptic = new HapticObject(this, R.drawable.radial);
+        joystickHaptic.toggleView(false);
     }
     
     private void initButtonField(){
-        dragDropButton = (Button) findViewById(R.id.drag_drop_button);
 
         modeType = (TextView)findViewById(R.id.mode_type);
         modeType.setText(R.string.mode_false);
 
         greenButton = (ImageButton) findViewById(R.id.button_green);
-        greenButton.setOnClickListener(this);
+
         greenButton.setImageResource(R.drawable.greena);
 
-        HapticObject greenHaptic = new HapticObject(this, R.drawable.noise_texture);
-
         redButton = (ImageButton) findViewById(R.id.button_red);
-
-
-
-        HapticObject redHaptic = new HapticObject(this, R.drawable.noise_texture);
 
         findViewById(R.id.activity_main).setOnDragListener(new ButtonDragListener());
 
         redButtonHaptic = new HapticObject(this, R.drawable.noise_texture );
         greenButtonHaptic = new HapticObject(this, R.drawable.noise_texture);
     }
-    
+
     private void initDragListener(){
         findViewById(R.id.buttonField).setOnDragListener(new ButtonDragListener(){
 
@@ -157,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void onClick(View v){
+    public void toggleButtonDrag(View v){
         //Drag and Drop Button
         if(v.getId() == R.id.drag_drop_button) {
             if (MODE) {
@@ -186,19 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         greenButton.setOnLongClickListener(null);
     }
 
-    View.OnLongClickListener longListen = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            ClipData data = ClipData.newPlainText("","");
-
-            DragShadow dragShadow = new DragShadow(view);
-
-            view.startDrag(data, dragShadow, view, 0);
-            return false;
-        }
-    };
-
-
     public void changeMODE(boolean MODE){
         this.MODE = MODE;
         Log.v(LOG_MODE, String.valueOf(MODE));
@@ -218,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         joystickHaptic.onWindowFocusChanged(this, true, R.id.joystickView);
+        greenButtonHaptic.onWindowFocusChanged(this, hasFocus, R.id.button_green);
+        redButtonHaptic.onWindowFocusChanged(this,hasFocus, R.id.button_red);
 
     }
 
@@ -229,7 +228,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         joystickHaptic.onDestroy();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e("Event Action", event.toString());
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 
+    private void createJoyStick() {
+        joyStick = (DynamicJoystick) findViewById(R.id.joystickView);
+
+
+        joyStick.setOnJoystickMoveListener(new DynamicJoystick.OnJoystickMoveListener() {
+            @Override
+            public void onValueChanged(int angle, int power, int direction) {
+                // TODO Auto-generated method stub
+                angleTextView.setText(" " + String.valueOf(angle) + "°");
+                powerTextView.setText(" " + String.valueOf(power) + "%");
+                switch (direction) {
+                    case DynamicJoystick.FRONT:
+                        directionTextView.setText("Front");
+                        break;
+                    case DynamicJoystick.FRONT_RIGHT:
+                        directionTextView.setText("Front Right");
+                        break;
+                    case DynamicJoystick.RIGHT:
+                        directionTextView.setText("Right");
+                        break;
+                    case DynamicJoystick.RIGHT_BOTTOM:
+                        directionTextView.setText("Right Bottom");
+                        break;
+                    case DynamicJoystick.BOTTOM:
+                        directionTextView.setText("Bottom");
+                        break;
+                    case DynamicJoystick.BOTTOM_LEFT:
+                        directionTextView.setText("Bottom Left");
+                        break;
+                    case DynamicJoystick.LEFT:
+                        directionTextView.setText("Left");
+                        break;
+                    case DynamicJoystick.LEFT_FRONT:
+                        directionTextView.setText("Left Front");
+                        break;
+                    default:
+                        directionTextView.setText("Center");
+                }
+            }
+        }, DynamicJoystick.DEFAULT_LOOP_INTERVAL);
+    }
+    
     private class DragShadow extends View.DragShadowBuilder{
 
         public ImageButton var;
@@ -262,56 +309,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
-    
-    private void createJoyStick() {
-        joyStick = (JoystickView) findViewById(R.id.joystickView);
-
-
-        joyStick.setOnJoystickMoveListener(new JoystickView.OnJoystickMoveListener() {
-            @Override
-            public void onValueChanged(int angle, int power, int direction) {
-                // TODO Auto-generated method stub
-                angleTextView.setText(" " + String.valueOf(angle) + "°");
-                powerTextView.setText(" " + String.valueOf(power) + "%");
-                switch (direction) {
-                    case JoystickView.FRONT:
-                        directionTextView.setText("Front");
-                        break;
-                    case JoystickView.FRONT_RIGHT:
-                        directionTextView.setText("Front Right");
-                        break;
-                    case JoystickView.RIGHT:
-                        directionTextView.setText("Right");
-                        break;
-                    case JoystickView.RIGHT_BOTTOM:
-                        directionTextView.setText("Right Bottom");
-                        break;
-                    case JoystickView.BOTTOM:
-                        directionTextView.setText("Bottom");
-                        break;
-                    case JoystickView.BOTTOM_LEFT:
-                        directionTextView.setText("Bottom Left");
-                        break;
-                    case JoystickView.LEFT:
-                        directionTextView.setText("Left");
-                        break;
-                    case JoystickView.LEFT_FRONT:
-                        directionTextView.setText("Left Front");
-                        break;
-                    default:
-                        directionTextView.setText("Center");
-                }
-            }
-        }, JoystickView.DEFAULT_LOOP_INTERVAL);
-    }
-
-
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         private static final String DEBUG_TAG = "Gestures";

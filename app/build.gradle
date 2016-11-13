@@ -27,5 +27,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     testCompile 'junit:junit:4.12'
     compile project(':tanvas-hapticlib-3.0-163')
-    compile project(':joystickview')
 }
