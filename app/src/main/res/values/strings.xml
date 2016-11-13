@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
 
     <string name="app_name">BluetoothTest</string>
     <string name="action_settings">Settings</string>
@@ -10,3 +11,10 @@
     <string name="Find">Search new Devices / Cancel</string>
 
 </resources>
+=======
+    <string name="app_name">GameController</string>
+    <string name="mode_false">Out of Drag/Drop Mode</string>
+    <string name="mode_true">In Drag/Drop Mode</string>
+    <string name="log_mode">MODE CHANGE : </string>
+</resources>
+>>>>>>> origin
