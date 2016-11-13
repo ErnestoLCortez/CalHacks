@@ -25,16 +25,8 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/mode_type" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/green_button_wrap">
 
-        <View
-            android:id="@+id/greenHaptic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -45,15 +37,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="57dp" />
 
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/red_button_wrap"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="14dp">
+
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -63,15 +48,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="43dp" />
 
-        <View
-            android:id="@+id/redHaptic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="11dp" />
 
-    </RelativeLayout>
+
 
 
     <!--ImageView

@@ -74,6 +74,7 @@ public class HapticTest extends AppCompatActivity{
 
     }
 
+
     /**
      * Override: onDestroy
      * <p/>
