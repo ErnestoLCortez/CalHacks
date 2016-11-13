@@ -114,7 +114,7 @@ public class HapticTest extends AppCompatActivity implements View.OnTouchListene
             onWindowFocusChanged(true);
             /*PROBLEM AREA*/
             //joyStick.onTouchEvent(event);'
-            Log.d()
+            Log.d("drag", "drag");
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             joyStickCreated = false;
             joyStick.setVisibility(View.INVISIBLE);
