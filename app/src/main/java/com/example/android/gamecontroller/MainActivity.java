@@ -55,9 +55,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         modeType.setText(R.string.mode_false);
 
         greenButton = (ImageButton) findViewById(R.id.button_green);
+        greenButton.setOnClickListener(this);
+        greenButton.setImageResource(R.drawable.greena);
+
+        HapticObject greenHaptic = new HapticObject(this, R.drawable.noise_texture);
+
         redButton = (ImageButton) findViewById(R.id.button_red);
         redButton.setOnClickListener(this);
         redButton.setImageResource(R.drawable.redb);
+
+        HapticObject redHaptic = new HapticObject(this, R.drawable.noise_texture);
 
         findViewById(R.id.activity_main).setOnDragListener(new ButtonDragListener());
 
