@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.android.gamecontroller.HapticObject;
 import com.example.android.gamecontroller.R;
 
 /**
@@ -20,6 +21,8 @@ import com.example.android.gamecontroller.R;
  */
 
 public class ButtonDragListener implements View.OnDragListener {
+
+
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
@@ -70,8 +73,9 @@ public class ButtonDragListener implements View.OnDragListener {
                 int xOffset = parent.getLeft();
 
                 //dragged.setImageResource(R.drawable.black);
-                dragged.setTranslationX(event.getX());
-                dragged.setTranslationY(event.getY());
+
+                dragged.setX(event.getX());
+                dragged.setY(event.getY());
 
                 //target.findViewById(dragged.getId());
 
