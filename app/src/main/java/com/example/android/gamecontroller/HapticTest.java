@@ -25,7 +25,7 @@ import co.tanvas.haptics.service.adapter.*;
 import co.tanvas.haptics.service.model.*;
 
 import static android.R.attr.angle;
-import static android.R.attr.bitmap;
+//import static android.R.attr.bitmap;
 import static android.R.attr.direction;
 import static com.example.android.gamecontroller.R.id.gameField;
 

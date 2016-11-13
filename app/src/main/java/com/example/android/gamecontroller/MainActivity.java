@@ -1,5 +1,6 @@
 package com.example.android.gamecontroller;
 
+import android.app.ActionBar;
 import android.content.ClipData;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         dragDropButton = (Button) findViewById(R.id.drag_drop_button);
