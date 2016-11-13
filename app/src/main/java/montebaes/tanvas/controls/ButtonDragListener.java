@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
@@ -69,8 +70,6 @@ public class ButtonDragListener implements View.OnDragListener {
                 //dragged.setImageResource(R.drawable.black);
                 dragged.setX(event.getX());
                 dragged.setY(event.getY());
-
-
 
                 //target.findViewById(dragged.getId());
 

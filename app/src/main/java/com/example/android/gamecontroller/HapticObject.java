@@ -1,5 +1,6 @@
 package com.example.android.gamecontroller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,9 +18,6 @@ import co.tanvas.haptics.service.model.HapticSprite;
 import co.tanvas.haptics.service.model.HapticTexture;
 import co.tanvas.haptics.service.model.HapticView;
 
-/**
- * Created by atomi on 11/12/2016.
- */
 
 public class HapticObject {
 
@@ -73,7 +71,7 @@ public class HapticObject {
 
 
 
-    public void onWindowFocusChanged(AppCompatActivity parentActivity, boolean hasFocus, int containerID) {
+    public void onWindowFocusChanged(Activity parentActivity, boolean hasFocus, int containerID) {
 
         if (hasFocus) {
             try {
