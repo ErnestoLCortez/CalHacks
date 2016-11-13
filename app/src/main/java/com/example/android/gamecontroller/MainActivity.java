@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dragDropButton = (Button) findViewById(R.id.drag_drop_button);
         dragDropButton.setOnClickListener(this);
 
-        //testMoveImg = (ImageView) findViewById(R.id.test_move_img);
-        //testMoveImg = (ImageView) findViewById(R.id.button_red_unpressed);
-        //testMoveImg.setOnClickListener(this);
-
         modeType = (TextView) findViewById(R.id.mode_type);
         modeType.setOnClickListener(this);
         modeType.setText(R.string.mode_false);
