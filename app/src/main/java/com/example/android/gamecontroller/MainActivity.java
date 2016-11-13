@@ -1,6 +1,7 @@
 package com.example.android.gamecontroller;
 
 import android.content.ClipData;
+import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
@@ -14,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         initJoystickField();
         initButtonField();
@@ -320,14 +323,17 @@ public class MainActivity extends AppCompatActivity {
             float x = event.getX();
             float y = event.getY();
 
-            joyStick.setX(x-300);
-            joyStick.setY(y-300);
+            View joystickField = findViewById(R.id.joystickField);
 
 
-            onWindowFocusChanged(true);
+                joyStick.setX(x - 300);
+                joyStick.setY(y - 300);
+
+
+                onWindowFocusChanged(true);
             /*PROBLEM AREA*/
-            //joyStick.dispatchTouchEvent(event);
-            Log.d("drag", "drag");
+                //joyStick.dispatchTouchEvent(event);
+                Log.d("drag", "drag");
 
 
             return true;

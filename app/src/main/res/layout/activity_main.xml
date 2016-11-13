@@ -15,7 +15,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:id="@+id/joystickField">
+            android:id="@+id/joystickField"
+            >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,14 +108,15 @@
                     android:layout_height="match_parent"
                     android:id="@+id/joystickWrap">
 
-                <com.example.android.gamecontroller.DynamicJoystick
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:id="@+id/joystickView"/>
+                        <com.example.android.gamecontroller.DynamicJoystick
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:id="@+id/joystickView"/>
 
-        </RelativeLayout>
+                </RelativeLayout>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="0dp"
@@ -165,5 +167,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="43dp" />
         </LinearLayout>
+
+
 
 </LinearLayout>

@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="co.tanvas.haptics.service.app.HapticApplication">
+
         <activity android:name=".MainActivity"
             >
             <intent-filter>

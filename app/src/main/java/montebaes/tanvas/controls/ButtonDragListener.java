@@ -65,27 +65,24 @@ public class ButtonDragListener implements View.OnDragListener {
             case DragEvent.ACTION_DROP:
                 Log.d("drag", "drop" + event.getX() + " " + event.getY());
 
-
-
                 //RelativeLayout target = (RelativeLayout) v;
                 ImageButton dragged = (ImageButton) event.getLocalState();
-                RelativeLayout parent = (RelativeLayout)dragged.getParent();
-                int xOffset = parent.getLeft();
 
-                //dragged.setImageResource(R.drawable.black);
-
-                dragged.setX(event.getX());
-                dragged.setY(event.getY());
-
-                //target.findViewById(dragged.getId());
+                if(((View)dragged.getParent()).getId() == R.id.buttonField) {
 
 
-                // Invalidates the view to force a redraw
-                v.invalidate();
+                    dragged.setX(event.getX());
+                    dragged.setY(event.getY());
 
-                // Invalidates the view to force a redraw
-                v.invalidate();
+                    //target.findViewById(dragged.getId());
 
+
+                    // Invalidates the view to force a redraw
+                    v.invalidate();
+
+                    // Invalidates the view to force a redraw
+                    v.invalidate();
+                }
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
 /*
